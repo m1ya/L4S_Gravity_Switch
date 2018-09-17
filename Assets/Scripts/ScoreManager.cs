@@ -25,4 +25,8 @@ public class ScoreManager : SingletonMonoBehaviour<ScoreManager> {
 		score += i;
 		scoreLabel.text = score.ToString ();
 	}
+
+	public int GetScore () {
+		return score;
+	}
 }

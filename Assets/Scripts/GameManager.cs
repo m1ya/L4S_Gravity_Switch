@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : SingletonMonoBehaviour<GameManager> {
 
@@ -10,6 +11,9 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 	[SerializeField]
 	private GameObject startCanvas,
 	endCanvas;
+
+	[SerializeField]
+	private Text highscoreLabel;
 
 	// Use this for initialization
 	void Start () {
@@ -32,5 +36,17 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 	public void GameOver () {
 		isPlay = false;
 		endCanvas.SetActive (true);
+
+		// ハイスコアの読み込み
+		int highscore = PlayerPrefs.GetInt ("HighScore");
+		int score = ScoreManager.Instance.GetScore ();
+		// ハイスコアの更新
+		if (highscore < score) {
+			PlayerPrefs.SetInt ("HighScore", score);
+		} else {
+			score = highscore;
+		}
+		// ハイスコアの表示
+		highscoreLabel.text = "High Score : " + score.ToString ("000");
 	}
 }
